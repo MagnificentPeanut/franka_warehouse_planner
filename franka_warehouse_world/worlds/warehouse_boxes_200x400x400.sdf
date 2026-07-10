@@ -196,6 +196,11 @@
           <geometry>
             <box><size>0.2000 0.4000 0.4000</size></box>
           </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>0x01</collide_bitmask>
+            </contact>
+          </surface>
         </collision>
         <visual name="visual">
           <geometry>
@@ -208,6 +213,16 @@
           </material>
         </visual>
       </link>
+      <plugin filename="libignition-gazebo-detachable-joint-system.so"
+              name="ignition::gazebo::systems::DetachableJoint">
+        <parent_link>link</parent_link>
+        <child_model>franka</child_model>
+        <child_link>fr3_cobot_pump</child_link>
+        <detach_topic>/box/detach</detach_topic>
+        <attach_topic>/box/attach</attach_topic>
+        <output_topic>/box/attach_state</output_topic>
+        <initial_attach>false</initial_attach>
+      </plugin>
     </model>
   </world>
 </sdf>
