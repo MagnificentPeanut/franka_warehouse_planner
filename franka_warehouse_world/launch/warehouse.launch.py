@@ -62,7 +62,7 @@ def get_robot_description(context: LaunchContext):
             'hand': load_gripper,
             'gazebo': 'true',
             'ee_id': franka_hand,
-            'gazebo_effort': 'true',
+            'gazebo_effort': 'false',
             # Fix link0 to the world at the mount height (see fr3.urdf.xacro).
             'xyz': f'0 0 {mount_height}',
         })
@@ -102,21 +102,7 @@ def resolve_mount_height(context: LaunchContext):
     return 0.0  # unknown custom world -> mount on the floor
 
 
-def load_controller(context: LaunchContext):
-    controller = context.perform_substitution(LaunchConfiguration('controller'))
-    return [Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=[
-            'joint_state_broadcaster',
-            controller,
-            '--controller-manager-timeout', '30',
-        ],
-        parameters=[PathJoinSubstitution([
-            FindPackageShare('franka_gazebo_bringup'),
-            'config', 'franka_gazebo_controllers.yaml'])],
-        output='screen',
-    )]
+
 
 
 def launch_setup(context: LaunchContext):
@@ -154,7 +140,19 @@ def launch_setup(context: LaunchContext):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=spawn,
-                on_exit=[OpaqueFunction(function=load_controller)],
+                on_exit=[Node(
+                    package='controller_manager',
+                    executable='spawner',
+                    arguments=[
+                        'joint_state_broadcaster',
+                        LaunchConfiguration('controller'),
+                        '--controller-manager-timeout', '30',
+                    ],
+                    parameters=[PathJoinSubstitution([
+                        FindPackageShare('franka_gazebo_bringup'),
+                        'config', 'franka_gazebo_controllers.yaml'])],
+                    output='screen',
+                )],
             )),
         RegisterEventHandler(
             OnShutdown(on_shutdown=[ExecuteProcess(
@@ -183,8 +181,8 @@ def generate_launch_description():
             'franka_hand', default_value='franka_hand',
             description='Default value: franka_hand'),
         DeclareLaunchArgument(
-            'controller', default_value='gravity_compensation_example_controller',
-            description='Controller from franka_example_controllers to load.'),
+            'controller', default_value='fr3_arm_controller',
+            description='Controller to load.'),
         DeclareLaunchArgument(
             'rviz', default_value='true',
             description='true/false for visualizing the robot in rviz'),

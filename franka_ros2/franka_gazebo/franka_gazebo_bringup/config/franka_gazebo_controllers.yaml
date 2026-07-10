@@ -1,4 +1,5 @@
 /**:
+
   controller_manager:
     ros__parameters:
       update_rate: 1000  # Hz
@@ -15,6 +16,9 @@
       joint_state_broadcaster:
         type: joint_state_broadcaster/JointStateBroadcaster
 
+      fr3_arm_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
       mobile_fr3_duo_joint_impedance_example_controller:
         type: franka_example_controllers/MobileFr3DuoJointImpedanceExampleController
       
@@ -27,13 +31,30 @@
       swerve_drive_controller:
         type: franka_mobile/SwerveDriveController
 
-/**:
+
+  fr3_arm_controller:
+    ros__parameters:
+      joints:
+        - fr3_joint1
+        - fr3_joint2
+        - fr3_joint3
+        - fr3_joint4
+        - fr3_joint5
+        - fr3_joint6
+        - fr3_joint7
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
+
+
   joint_velocity_example_controller:
     ros__parameters:
       robot_type: "fr3"
       gazebo: true
 
-/**:    
+    
   joint_impedance_example_controller:
     ros__parameters:
       robot_type: "fr3"
@@ -54,7 +75,7 @@
         - 1.0
         - 0.5
 
-/**:
+
   swerve_drive_controller:
     ros__parameters:
       command_interface_prefix: swerve_ik_controller/
@@ -95,7 +116,7 @@
           min_jerk               : -10.0  # rad/s^3
     
 
-/**:
+
   swerve_ik_controller:
     ros__parameters:
       prefix: "tmrv0_2_"

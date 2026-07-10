@@ -86,9 +86,9 @@ def launch_setup(context: LaunchContext):
     robot_description, robot_description_semantic = build_descriptions(context, load_gripper)
     kinematics_yaml = load_yaml('franka_fr3_moveit_config', 'config/kinematics.yaml')
 
-    ompl_planning_pipeline_config = {
+    chomp_planning_pipeline_config = {
         'move_group': {
-            'planning_plugin': 'ompl_interface/OMPLPlanner',
+            'planning_plugin': 'chomp_interface/CHOMPPlanner',
             'request_adapters': 'default_planner_request_adapters/AddTimeOptimalParameterization '
                                 'default_planner_request_adapters/ResolveConstraintFrames '
                                 'default_planner_request_adapters/FixWorkspaceBounds '
@@ -98,9 +98,9 @@ def launch_setup(context: LaunchContext):
             'start_state_max_bounds_error': 0.1,
         }
     }
-    ompl_planning_yaml = load_yaml('franka_fr3_moveit_config', 'config/ompl_planning.yaml')
-    if ompl_planning_yaml:
-        ompl_planning_pipeline_config['move_group'].update(ompl_planning_yaml)
+    chomp_planning_yaml = load_yaml('franka_fr3_moveit_config', 'config/chomp_planning.yaml')
+    if chomp_planning_yaml:
+        chomp_planning_pipeline_config['move_group'].update(chomp_planning_yaml)
 
     # Trajectory execution / controller manager. Required to avoid a crash in
     # move_group's execution manager even when we only plan (not execute).
@@ -131,7 +131,7 @@ def launch_setup(context: LaunchContext):
     move_group = Node(
         package='moveit_ros_move_group', executable='move_group', output='screen',
         parameters=[robot_description, robot_description_semantic, kinematics_yaml,
-                    ompl_planning_pipeline_config, trajectory_execution,
+                    chomp_planning_pipeline_config, trajectory_execution,
                     moveit_controllers, planning_scene_monitor_parameters,
                     use_sim_time])
 
@@ -141,7 +141,7 @@ def launch_setup(context: LaunchContext):
         package='rviz2', executable='rviz2', name='rviz2', output='log',
         arguments=['-d', rviz_config],
         parameters=[robot_description, robot_description_semantic, kinematics_yaml,
-                    ompl_planning_pipeline_config, use_sim_time],
+                    chomp_planning_pipeline_config, use_sim_time],
         condition=IfCondition(LaunchConfiguration('rviz')))
 
     # NOTE: no use_sim_time here on purpose -- the publisher emits static

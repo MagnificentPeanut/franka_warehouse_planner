@@ -1,0 +1,90 @@
+[
+  {
+    "cycle": 1,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0,
+        "path_length": 4.674942294056709,
+        "waypoints": 25,
+        "vel_variance": 0.03279241342863769,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0,
+        "path_length": 1.2132381803745913,
+        "waypoints": 14,
+        "vel_variance": 0.00850493320371359,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0,
+        "path_length": 1.2800052967552442,
+        "waypoints": 14,
+        "vel_variance": 0.0081183261570414,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0,
+        "path_length": 3.076002080954774,
+        "waypoints": 20,
+        "vel_variance": 0.02288782399654406,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0,
+        "path_length": 1.2535602361608336,
+        "waypoints": 15,
+        "vel_variance": 0.007911749711318427,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0,
+        "path_length": 1.1657583987782347,
+        "waypoints": 15,
+        "vel_variance": 0.006440977986331288,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": 0.0006465196965346453,
+      "place": 1.6635833938689366e-06
+    },
+    "cycle_time": 0.0
+  }
+]
