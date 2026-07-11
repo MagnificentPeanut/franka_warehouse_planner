@@ -1,0 +1,1082 @@
+[
+  {
+    "cycle": 1,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.06720185279846191,
+        "exec_time": 5.353899717330933,
+        "wait_time": 0.5,
+        "path_length": 3.9392081700010215,
+        "waypoints": 27,
+        "vel_variance": 0.020439549171390264,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05050158500671387,
+        "exec_time": 2.7047436237335205,
+        "wait_time": 0.5,
+        "path_length": 0.956068186701823,
+        "waypoints": 15,
+        "vel_variance": 0.004183580239541026,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05100202560424805,
+        "exec_time": 2.484622001647949,
+        "wait_time": 0.5,
+        "path_length": 0.9238281026646781,
+        "waypoints": 15,
+        "vel_variance": 0.004096424471027663,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 2,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.15345978736877441,
+        "exec_time": 9.44160532951355,
+        "wait_time": 1.5,
+        "path_length": 7.639395895623062,
+        "waypoints": 52,
+        "vel_variance": 0.018945961797525054,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05049014091491699,
+        "exec_time": 2.3925232887268066,
+        "wait_time": 0.5,
+        "path_length": 1.201669076929987,
+        "waypoints": 14,
+        "vel_variance": 0.00643031972602745,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.053464412689208984,
+        "exec_time": 2.438227415084839,
+        "wait_time": 0.5,
+        "path_length": 1.269224591355354,
+        "waypoints": 14,
+        "vel_variance": 0.007316268929058782,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 9.452997449861091e-07,
+        "ori_error": 0.0005264975997626152
+      },
+      "place": {
+        "pos_error": 7.273749190646367e-05,
+        "ori_error": 0.0005534248338727266
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 36.8182110786438
+  },
+  {
+    "cycle": 2,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05311083793640137,
+        "exec_time": 3.5578041076660156,
+        "wait_time": 0.5,
+        "path_length": 2.6162657900215374,
+        "waypoints": 21,
+        "vel_variance": 0.01446098383643991,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05354738235473633,
+        "exec_time": 2.441650867462158,
+        "wait_time": 0.5,
+        "path_length": 1.0030838628438796,
+        "waypoints": 15,
+        "vel_variance": 0.004783829233589969,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05045461654663086,
+        "exec_time": 2.439781427383423,
+        "wait_time": 0.5,
+        "path_length": 0.979519853700643,
+        "waypoints": 15,
+        "vel_variance": 0.004538677088751828,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.10470342636108398,
+        "exec_time": 8.439343690872192,
+        "wait_time": 0.5,
+        "path_length": 8.790303491516275,
+        "waypoints": 49,
+        "vel_variance": 0.02920116902250633,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0539247989654541,
+        "exec_time": 2.335313081741333,
+        "wait_time": 0.5,
+        "path_length": 0.8639098148437862,
+        "waypoints": 14,
+        "vel_variance": 0.0036837800979069007,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05368208885192871,
+        "exec_time": 2.5969157218933105,
+        "wait_time": 0.5,
+        "path_length": 0.9358845428377834,
+        "waypoints": 15,
+        "vel_variance": 0.004188701214510021,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 1.3229430528573396e-06,
+        "ori_error": 0.0005870911657107696
+      },
+      "place": {
+        "pos_error": 8.232889112420889e-05,
+        "ori_error": 0.00040468705981663595
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 32.61099362373352
+  },
+  {
+    "cycle": 3,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05150151252746582,
+        "exec_time": 3.158533811569214,
+        "wait_time": 0.5,
+        "path_length": 1.523818719651011,
+        "waypoints": 19,
+        "vel_variance": 0.006741118157461915,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05294156074523926,
+        "exec_time": 2.3803186416625977,
+        "wait_time": 0.5,
+        "path_length": 0.8249520091809576,
+        "waypoints": 14,
+        "vel_variance": 0.0033999939916032227,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.053241729736328125,
+        "exec_time": 2.2896769046783447,
+        "wait_time": 0.5,
+        "path_length": 0.8864112047202581,
+        "waypoints": 15,
+        "vel_variance": 0.0038102169918411907,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05793952941894531,
+        "exec_time": 8.971039533615112,
+        "wait_time": 0.5,
+        "path_length": 9.33481675452332,
+        "waypoints": 53,
+        "vel_variance": 0.023663769052739335,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05436396598815918,
+        "exec_time": 2.4835288524627686,
+        "wait_time": 0.5,
+        "path_length": 1.1357157577294246,
+        "waypoints": 15,
+        "vel_variance": 0.0053038339946549036,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0529632568359375,
+        "exec_time": 2.38822603225708,
+        "wait_time": 0.5,
+        "path_length": 1.0315096991136052,
+        "waypoints": 15,
+        "vel_variance": 0.005027345643457616,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 6.492146091868924e-07,
+        "ori_error": 0.0004913207708613632
+      },
+      "place": {
+        "pos_error": 6.261139270293683e-05,
+        "ori_error": 0.0005392591417400761
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 32.42585253715515
+  },
+  {
+    "cycle": 4,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05787301063537598,
+        "exec_time": 0.9736559391021729,
+        "wait_time": 0.5,
+        "path_length": 0.2759277830845982,
+        "waypoints": 6,
+        "vel_variance": 0.0032957668354140312,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05262184143066406,
+        "exec_time": 2.2878127098083496,
+        "wait_time": 0.5,
+        "path_length": 0.8835580149611548,
+        "waypoints": 14,
+        "vel_variance": 0.003654973598391864,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05033087730407715,
+        "exec_time": 2.483948230743408,
+        "wait_time": 0.5,
+        "path_length": 1.0180356624600242,
+        "waypoints": 15,
+        "vel_variance": 0.004898972149603731,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 2,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.20783090591430664,
+        "exec_time": 8.77599549293518,
+        "wait_time": 1.5,
+        "path_length": 7.59532453967953,
+        "waypoints": 51,
+        "vel_variance": 0.01006337247037809,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.050597429275512695,
+        "exec_time": 2.48435640335083,
+        "wait_time": 0.5,
+        "path_length": 1.2167112686248094,
+        "waypoints": 15,
+        "vel_variance": 0.006899246258240024,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05615520477294922,
+        "exec_time": 2.8955495357513428,
+        "wait_time": 0.5,
+        "path_length": 1.046827489158138,
+        "waypoints": 15,
+        "vel_variance": 0.005178676915419821,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 7.54719881648625e-07,
+        "ori_error": 0.00044424437273198503
+      },
+      "place": {
+        "pos_error": 6.256992013935402e-05,
+        "ori_error": 0.000710472458139895
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 31.732967376708984
+  },
+  {
+    "cycle": 5,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05204057693481445,
+        "exec_time": 5.529468536376953,
+        "wait_time": 0.5,
+        "path_length": 5.036933463743726,
+        "waypoints": 32,
+        "vel_variance": 0.01855697154773751,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05045008659362793,
+        "exec_time": 2.395537853240967,
+        "wait_time": 0.5,
+        "path_length": 1.1924157544479033,
+        "waypoints": 14,
+        "vel_variance": 0.006142462928354935,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05431532859802246,
+        "exec_time": 2.9668750762939453,
+        "wait_time": 0.5,
+        "path_length": 1.3797070206200044,
+        "waypoints": 15,
+        "vel_variance": 0.008969544125502644,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05132436752319336,
+        "exec_time": 9.659600257873535,
+        "wait_time": 0.5,
+        "path_length": 8.465707637576124,
+        "waypoints": 53,
+        "vel_variance": 0.017619529285428183,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0504155158996582,
+        "exec_time": 2.849855899810791,
+        "wait_time": 0.5,
+        "path_length": 1.3115623210119285,
+        "waypoints": 15,
+        "vel_variance": 0.007048907075246932,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05070924758911133,
+        "exec_time": 2.500485420227051,
+        "wait_time": 0.5,
+        "path_length": 1.252986762304781,
+        "waypoints": 14,
+        "vel_variance": 0.0071750236927043244,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 4.5650477810850266e-07,
+        "ori_error": 0.0007658200342178637
+      },
+      "place": {
+        "pos_error": 0.0001296023465478362,
+        "ori_error": 0.0007114733434715243
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 36.773948192596436
+  },
+  {
+    "cycle": 6,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05340218544006348,
+        "exec_time": 11.11916208267212,
+        "wait_time": 0.5,
+        "path_length": 11.779508799580421,
+        "waypoints": 62,
+        "vel_variance": 0.01976048804683946,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05236673355102539,
+        "exec_time": 2.531862258911133,
+        "wait_time": 0.5,
+        "path_length": 1.4098184703671919,
+        "waypoints": 15,
+        "vel_variance": 0.00872946046403364,
+        "collision_free": false
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.050781965255737305,
+        "exec_time": 2.4378442764282227,
+        "wait_time": 0.5,
+        "path_length": 1.2846394760335198,
+        "waypoints": 14,
+        "vel_variance": 0.008230373878586418,
+        "collision_free": false
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05125761032104492,
+        "exec_time": 10.631047010421753,
+        "wait_time": 0.5,
+        "path_length": 10.701699912244262,
+        "waypoints": 55,
+        "vel_variance": 0.021380050465578365,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05278372764587402,
+        "exec_time": 3.0189335346221924,
+        "wait_time": 0.5,
+        "path_length": 1.0258679766593295,
+        "waypoints": 14,
+        "vel_variance": 0.004961485729768274,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05129575729370117,
+        "exec_time": 2.434218168258667,
+        "wait_time": 0.5,
+        "path_length": 1.1433804127270863,
+        "waypoints": 15,
+        "vel_variance": 0.006177487852171911,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 1.1153616308358145e-06,
+        "ori_error": 0.0003724033637892935
+      },
+      "place": {
+        "pos_error": 9.86845683317556e-05,
+        "ori_error": 0.00041886926812206886
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 42.56793737411499
+  },
+  {
+    "cycle": 7,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05522441864013672,
+        "exec_time": 3.817807674407959,
+        "wait_time": 0.5,
+        "path_length": 1.9613148630190957,
+        "waypoints": 18,
+        "vel_variance": 0.011764908110080454,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.053556203842163086,
+        "exec_time": 2.544313430786133,
+        "wait_time": 0.5,
+        "path_length": 1.2854411097175766,
+        "waypoints": 15,
+        "vel_variance": 0.008144305094801301,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.056381940841674805,
+        "exec_time": 2.7143006324768066,
+        "wait_time": 0.5,
+        "path_length": 1.3233418868449545,
+        "waypoints": 15,
+        "vel_variance": 0.008407215187883161,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 2,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.3105792999267578,
+        "exec_time": 15.317825317382812,
+        "wait_time": 1.5,
+        "path_length": 14.552963098846085,
+        "waypoints": 78,
+        "vel_variance": 0.014571349056812323,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05389404296875,
+        "exec_time": 2.850843667984009,
+        "wait_time": 0.5,
+        "path_length": 1.3939662216371305,
+        "waypoints": 15,
+        "vel_variance": 0.009227617078797282,
+        "collision_free": false
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05103468894958496,
+        "exec_time": 2.3996028900146484,
+        "wait_time": 0.5,
+        "path_length": 1.3015026886927377,
+        "waypoints": 14,
+        "vel_variance": 0.008550976300692997,
+        "collision_free": false
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 8.858023150866215e-07,
+        "ori_error": 0.000558244118216136
+      },
+      "place": {
+        "pos_error": 8.890354192284414e-05,
+        "ori_error": 0.00012488222521112052
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 41.20670509338379
+  },
+  {
+    "cycle": 8,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05088067054748535,
+        "exec_time": 5.627375602722168,
+        "wait_time": 0.5,
+        "path_length": 7.526339912843318,
+        "waypoints": 34,
+        "vel_variance": 0.03654722217085417,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.050394296646118164,
+        "exec_time": 2.3910598754882812,
+        "wait_time": 0.5,
+        "path_length": 0.8196487348469585,
+        "waypoints": 14,
+        "vel_variance": 0.0034013453182891672,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05460667610168457,
+        "exec_time": 2.5373449325561523,
+        "wait_time": 0.5,
+        "path_length": 0.9209540040781601,
+        "waypoints": 15,
+        "vel_variance": 0.004074467707158817,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05066227912902832,
+        "exec_time": 7.877056121826172,
+        "wait_time": 0.5,
+        "path_length": 8.544312474911917,
+        "waypoints": 46,
+        "vel_variance": 0.023928242918360005,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05050206184387207,
+        "exec_time": 2.3437535762786865,
+        "wait_time": 0.5,
+        "path_length": 1.048651066221609,
+        "waypoints": 15,
+        "vel_variance": 0.005667105023315098,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.051554203033447266,
+        "exec_time": 2.3748793601989746,
+        "wait_time": 0.5,
+        "path_length": 1.0310817739118647,
+        "waypoints": 15,
+        "vel_variance": 0.005023367979152304,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 7.772889562973902e-07,
+        "ori_error": 0.0004851898871585586
+      },
+      "place": {
+        "pos_error": 7.863939935438794e-05,
+        "ori_error": 0.0006417690561275707
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 33.8751802444458
+  },
+  {
+    "cycle": 9,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0591731071472168,
+        "exec_time": 3.6546342372894287,
+        "wait_time": 0.5,
+        "path_length": 4.3910825676237355,
+        "waypoints": 23,
+        "vel_variance": 0.03309267897860627,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.0538942813873291,
+        "exec_time": 2.3811228275299072,
+        "wait_time": 0.5,
+        "path_length": 1.2837174025357014,
+        "waypoints": 15,
+        "vel_variance": 0.008455730665173753,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.050390005111694336,
+        "exec_time": 2.234002113342285,
+        "wait_time": 0.5,
+        "path_length": 1.287622647847355,
+        "waypoints": 14,
+        "vel_variance": 0.008299047678890566,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.10436367988586426,
+        "exec_time": 8.7778160572052,
+        "wait_time": 0.5,
+        "path_length": 11.134908252140677,
+        "waypoints": 50,
+        "vel_variance": 0.031285434526534005,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05069589614868164,
+        "exec_time": 2.38661527633667,
+        "wait_time": 0.5,
+        "path_length": 1.3612915066374036,
+        "waypoints": 15,
+        "vel_variance": 0.009244678501576953,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05456709861755371,
+        "exec_time": 2.3387088775634766,
+        "wait_time": 0.5,
+        "path_length": 1.2956640039578147,
+        "waypoints": 14,
+        "vel_variance": 0.008448094216257996,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 8.633101190631832e-07,
+        "ori_error": 0.0003218168346290422
+      },
+      "place": {
+        "pos_error": 3.693438627961126e-05,
+        "ori_error": 0.000261359440178362
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 32.633224964141846
+  },
+  {
+    "cycle": 10,
+    "segments": {
+      "pre_grasp": {
+        "name": "pre_grasp",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05100893974304199,
+        "exec_time": 0.9736547470092773,
+        "wait_time": 0.5,
+        "path_length": 0.271193830894801,
+        "waypoints": 7,
+        "vel_variance": 0.002860226071782945,
+        "collision_free": true
+      },
+      "approach": {
+        "name": "approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05032086372375488,
+        "exec_time": 2.3342037200927734,
+        "wait_time": 0.5,
+        "path_length": 1.2308541525607557,
+        "waypoints": 14,
+        "vel_variance": 0.00871043288804874,
+        "collision_free": true
+      },
+      "retreat": {
+        "name": "retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05133557319641113,
+        "exec_time": 2.33720064163208,
+        "wait_time": 0.5,
+        "path_length": 1.2970406442268203,
+        "waypoints": 14,
+        "vel_variance": 0.00852047329191164,
+        "collision_free": true
+      },
+      "transit": {
+        "name": "transit",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.10240054130554199,
+        "exec_time": 8.379597902297974,
+        "wait_time": 0.5,
+        "path_length": 8.617387928975303,
+        "waypoints": 45,
+        "vel_variance": 0.02748226061956064,
+        "collision_free": true
+      },
+      "place_approach": {
+        "name": "place_approach",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05222725868225098,
+        "exec_time": 2.4818007946014404,
+        "wait_time": 0.5,
+        "path_length": 0.8703818123040894,
+        "waypoints": 15,
+        "vel_variance": 0.0038244106749976683,
+        "collision_free": true
+      },
+      "place_retreat": {
+        "name": "place_retreat",
+        "attempts": 1,
+        "success": true,
+        "hard_failure": false,
+        "plan_time": 0.05231881141662598,
+        "exec_time": 2.3781538009643555,
+        "wait_time": 0.5,
+        "path_length": 0.8682952887963274,
+        "waypoints": 15,
+        "vel_variance": 0.0036862482775222483,
+        "collision_free": true
+      }
+    },
+    "poses": {
+      "post_attach": "ATTACHED",
+      "post_detach": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "accuracy": {
+      "pick": {
+        "pos_error": 7.696718597802552e-07,
+        "ori_error": 0.00028056155303511616
+      },
+      "place": {
+        "pos_error": 6.144902212973584e-05,
+        "ori_error": 0.0003984956929355637
+      }
+    },
+    "overhead_wait_time": 3.0,
+    "cycle_time": 0.0,
+    "cycle_wall_time": 29.752573490142822
+  }
+]

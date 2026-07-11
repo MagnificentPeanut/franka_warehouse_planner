@@ -224,5 +224,7 @@
         <initial_attach>false</initial_attach>
       </plugin>
     </model>
+
+    <!-- ================= OBSTACLE ================= -->
   </world>
 </sdf>

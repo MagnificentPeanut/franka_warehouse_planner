@@ -182,14 +182,14 @@
 
     <!-- ================= BOX ================= -->
     <model name="box">
-      <pose>0.4500 -0.3000 0.9500 0 0 0</pose>
+      <pose>0.4500 -0.3000 0.9550 0 0 0</pose>
       <link name="link">
         <inertial>
-          <mass>2.4000</mass>
+          <mass>1.0000</mass>
           <inertia>
-            <ixx>0.050000</ixx><ixy>0</ixy><ixz>0</ixz>
-            <iyy>0.040000</iyy><iyz>0</iyz>
-            <izz>0.026000</izz>
+            <ixx>0.020833</ixx><ixy>0</ixy><ixz>0</ixz>
+            <iyy>0.016667</iyy><iyz>0</iyz>
+            <izz>0.010833</izz>
           </inertia>
         </inertial>
         <collision name="collision">
@@ -216,8 +216,8 @@
       <plugin filename="libignition-gazebo-detachable-joint-system.so"
               name="ignition::gazebo::systems::DetachableJoint">
         <parent_link>link</parent_link>
-        <child_model>franka</child_model>
-        <child_link>fr3_cobot_pump</child_link>
+        <child_model>fr3</child_model>
+        <child_link>fr3_link7</child_link>
         <detach_topic>/box/detach</detach_topic>
         <attach_topic>/box/attach</attach_topic>
         <output_topic>/box/attach_state</output_topic>

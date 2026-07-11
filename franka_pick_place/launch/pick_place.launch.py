@@ -36,12 +36,14 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    from launch.substitutions import PythonExpression
     warehouse_dir = get_package_share_directory('franka_warehouse_world')
 
     # ── Arguments ────────────────────────────────────────────────────────────
     world_arg    = DeclareLaunchArgument('world',      default_value='small')
     cycles_arg   = DeclareLaunchArgument('cycles',     default_value='3')
     obstacle_arg = DeclareLaunchArgument('with_obstacle', default_value='false')
+    planner_id_arg = DeclareLaunchArgument('planner_id', default_value='RRTConnect')
     launch_sim_arg = DeclareLaunchArgument(
         'launch_sim', default_value='true',
         description=(
@@ -53,6 +55,8 @@ def generate_launch_description():
     world      = LaunchConfiguration('world')
     cycles     = LaunchConfiguration('cycles')
     launch_sim = LaunchConfiguration('launch_sim')
+    planner_id = LaunchConfiguration('planner_id')
+    with_obstacle = LaunchConfiguration('with_obstacle')
 
     controller = LaunchConfiguration('controller')
 
@@ -73,6 +77,7 @@ def generate_launch_description():
             os.path.join(warehouse_dir, 'launch', 'warehouse.launch.py')),
         launch_arguments={
             'world':         world,
+            'with_obstacle': with_obstacle,
             'rviz':          'false',
             'load_gripper':  'true',
             'franka_hand':   'cobot_pump',
@@ -83,9 +88,14 @@ def generate_launch_description():
 
     # ── MoveIt + RViz (optional) ──────────────────────────────────────────────
     # MoveIt's RViz uses ogre1 and runs fine without software rendering.
+    moveit_launch_file = PythonExpression([
+        "'moveit_chomp.launch.py' if '", planner_id, "' == 'CHOMP' else 'moveit.launch.py'"
+    ])
+
     moveit_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(warehouse_dir, 'launch', 'moveit.launch.py')),
+        PythonLaunchDescriptionSource([
+            os.path.join(warehouse_dir, 'launch'), '/', moveit_launch_file
+        ]),
         launch_arguments={
             'world':         world,
             'load_gripper':  'true',
@@ -96,24 +106,37 @@ def generate_launch_description():
     )
 
     # ── Pick-and-place node ───────────────────────────────────────────────────
+    pick_place_executable = PythonExpression([
+        "'pick_place_node_chomp' if '", planner_id, "' == 'CHOMP' else 'pick_place_node'"
+    ])
+
     pick_place_node = Node(
         package='franka_pick_place',
-        executable='pick_place_node',
+        executable=pick_place_executable,
         name='pick_place_node',
         output='screen',
         parameters=[{
             'use_sim_time': launch_sim,
             'world':  world,
             'cycles': cycles,
-            'with_obstacle': LaunchConfiguration('with_obstacle'),
+            'with_obstacle': with_obstacle,
+            'planner_id': planner_id,
             'config': os.path.join(warehouse_dir, 'config', 'scene.yaml'),
         }],
+    )
+
+    fast_detach_node = Node(
+        package='franka_pick_place',
+        executable='fast_detach_node',
+        name='fast_detach_node',
+        output='screen',
+        parameters=[{'use_sim_time': launch_sim}],
     )
 
     # When launch_sim:=true  → wait 25 s for Gazebo + MoveIt to initialise.
     # When launch_sim:=false → wait  5 s (services already up, just need DDS).
     pick_place_with_sim = TimerAction(
-        period=25.0,
+        period=5.0,
         actions=[pick_place_node],
         condition=IfCondition(launch_sim),
     )
@@ -127,6 +150,7 @@ def generate_launch_description():
         world_arg,
         cycles_arg,
         obstacle_arg,
+        planner_id_arg,
         launch_sim_arg,
         controller_arg,
 
@@ -139,6 +163,7 @@ def generate_launch_description():
             ]
         ),
 
+        fast_detach_node,
         moveit_launch,
         pick_place_with_sim,
         pick_place_node_only,

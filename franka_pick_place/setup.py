@@ -24,7 +24,8 @@ setup(
     entry_points={
         'console_scripts': [
             'pick_place_node = franka_pick_place.pick_place_node:main',
-            'pick_place_node_chomp = franka_pick_place.pick_place_node_chomp:main'
+            'pick_place_node_chomp = franka_pick_place.pick_place_node_chomp:main',
+            'fast_detach_node = franka_pick_place.fast_detach_node:main'
         ],
     },
 )

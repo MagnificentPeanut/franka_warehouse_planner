@@ -84,4 +84,14 @@
     connected_to="base">
   </xacro:franka_robot>
 
+  <gazebo reference="fr3_cobot_pump">
+    <collision name="fr3_cobot_pump_collision">
+      <surface>
+        <contact>
+          <collide_bitmask>0x02</collide_bitmask>
+        </contact>
+      </surface>
+    </collision>
+  </gazebo>
+
 </robot>

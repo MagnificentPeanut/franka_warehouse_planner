@@ -22,8 +22,11 @@ Box dimensions are given in the same X Y Z order as the request
 
 import argparse
 
-# Cardboard-ish packed density (kg/m^3); used for the dynamic box inertia.
-DENSITY = 100.0
+# Fixed target mass (kg) for the box. The FR3 arm has a 3kg payload limit, and
+# the pump end-effector weighs 1.01kg. A 1.0kg box leaves plenty of margin
+# (~1kg) while keeping the inertia tensor elements > 0.01 kg*m^2 to prevent
+# numerical instability/explosions in the Gazebo DART solver at spawn.
+BOX_MASS = 1.0
 
 
 def box_model(name, size, pose, static, color):
@@ -33,7 +36,7 @@ def box_model(name, size, pose, static, color):
         inertial = ''
         static_tag = '      <static>true</static>\n'
     else:
-        mass = DENSITY * dx * dy * dz
+        mass = BOX_MASS
         ixx = mass / 12.0 * (dy * dy + dz * dz)
         iyy = mass / 12.0 * (dx * dx + dz * dz)
         izz = mass / 12.0 * (dx * dx + dy * dy)
@@ -78,8 +81,8 @@ def box_model(name, size, pose, static, color):
         '      <plugin filename="libignition-gazebo-detachable-joint-system.so"\n'
         '              name="ignition::gazebo::systems::DetachableJoint">\n'
         '        <parent_link>link</parent_link>\n'
-        '        <child_model>franka</child_model>\n'
-        '        <child_link>fr3_cobot_pump</child_link>\n'
+        '        <child_model>fr3</child_model>\n'
+        '        <child_link>fr3_link7</child_link>\n'
         '        <detach_topic>/box/detach</detach_topic>\n'
         '        <attach_topic>/box/attach</attach_topic>\n'
         '        <output_topic>/box/attach_state</output_topic>\n'
@@ -236,14 +239,18 @@ WAREHOUSE_SHELL = """    <!-- ================= PHYSICS ================= -->
 """
 
 
-def generate(world_name, size, table, box_xy, static_box):
+def generate(world_name, size, table, box_xy, static_box, with_obstacle):
     dims_mm = 'x'.join(str(int(round(s * 1000))) for s in size)
     table_sdf = table_model(table['height'], table['size_x'], table['size_y'],
                             table['center_x'], table['thickness'], table['leg'])
-    # Box rests on the tabletop at (box_x, box_y), bottom on the surface.
+    # Box rests on the tabletop at (box_x, box_y).
+    # We add a tiny 5mm gap so it doesn't spawn in exact contact with the table,
+    # which can trigger the DetachableJoint bug at spawn.
     box_x, box_y = box_xy
-    box_pose = (box_x, box_y, table['height'] + size[2] / 2.0)
+    box_pose = (box_x, box_y, table['height'] + size[2] / 2.0 + 0.005)
     box = box_model('box', size, box_pose, static=static_box, color=(0.85, 0.35, 0.12))
+
+    obstacle = ""
 
     header = (
         '<?xml version="1.0" ?>\n'
@@ -256,7 +263,8 @@ def generate(world_name, size, table, box_xy, static_box):
     footer = '  </world>\n</sdf>\n'
     body = (WAREHOUSE_SHELL
             + '\n    <!-- ================= TABLE ================= -->\n' + table_sdf
-            + '\n    <!-- ================= BOX ================= -->\n' + box)
+            + '\n    <!-- ================= BOX ================= -->\n' + box
+            + ('\n    <!-- ================= OBSTACLE ================= -->\n' + obstacle if with_obstacle else ''))
     return header + body + footer
 
 
@@ -268,6 +276,8 @@ def main():
     p.add_argument('--world', required=True, help='world key in scene.yaml (small/large)')
     p.add_argument('--static-box', action='store_true',
                    help='pin the box in place instead of a graspable rigid body')
+    p.add_argument('--with-obstacle', action='store_true',
+                   help='add the obstacle to the world')
     p.add_argument('--output', required=True, help='output .sdf path')
     args = p.parse_args()
 
@@ -278,7 +288,7 @@ def main():
     w = cfg['worlds'][args.world]
 
     sdf = generate(w['world_name'], w['box_size'], cfg['table'], w['box_xy'],
-                   static_box=args.static_box)
+                   static_box=args.static_box, with_obstacle=args.with_obstacle)
     with open(args.output, 'w') as f:
         f.write(sdf)
     print(f"Wrote {args.output} (table top {cfg['table']['height']} m, "

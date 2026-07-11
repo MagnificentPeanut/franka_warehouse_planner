@@ -34,6 +34,7 @@ class PickPlaceNodeChomp(Node):
         self.world = self.declare_parameter('world', 'small').value
         self.cycles = self.declare_parameter('cycles', 10).value
         self.with_obstacle = self.declare_parameter('with_obstacle', False).value
+        self.overwrite_results = self.declare_parameter('overwrite_results', False).value
         config_path = self.declare_parameter('config', '').value
 
         if not config_path:
@@ -104,9 +105,16 @@ class PickPlaceNodeChomp(Node):
             self.get_logger().info('validity_srv not available, waiting...')
         while not self.get_scene_srv.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('get_planning_scene not available, waiting...')
-        while not self.exec_action.wait_for_server(timeout_sec=1.0):
+        if not self.exec_action.wait_for_server(timeout_sec=5.0):
             self.get_logger().info('exec_action not available, waiting...')
         self.get_logger().info('All MoveIt services ready!')
+
+        # Signal early detach script to stop
+        try:
+            with open('/tmp/stop_early_detach', 'w') as f:
+                f.write('stop')
+        except Exception:
+            pass
 
         # Clear any lingering attached objects from previous aborted runs
         self.get_logger().info('Clearing scene state and waiting 5 seconds before starting...')
@@ -114,9 +122,11 @@ class PickPlaceNodeChomp(Node):
         self.update_box_pose("detach", self.box_start_xy, self.box_size[2]/2.0)
         
         if self.with_obstacle:
+            time.sleep(4.0)
             self.spawn_obstacle()
-            
-        time.sleep(5.0)
+            time.sleep(1.0)
+        else:
+            time.sleep(5.0)
 
     def _get_pose(self, x, y, z):
         p = PoseStamped()
@@ -325,20 +335,55 @@ class PickPlaceNodeChomp(Node):
         
         primitive = SolidPrimitive()
         primitive.type = SolidPrimitive.BOX
-        primitive.dimensions = [0.1, 0.1, 0.55]
+        primitive.dimensions = [0.1, 0.1, 0.50]
         obs.primitives.append(primitive)
         
         p = Pose()
         p.position.x = 0.45
         p.position.y = 0.0
-        p.position.z = 0.275
+        p.position.z = 0.25
         p.orientation.w = 1.0
         obs.primitive_poses.append(p)
         
         scene.world.collision_objects.append(obs)
         self.scene_pub.publish(scene)
-        self.get_logger().info("Spawned Part 3 collision obstacle")
-        time.sleep(0.5)
+        self.get_logger().info('Added obstacle to MoveIt scene.')
+        
+        # Dynamically spawn the obstacle in Gazebo to prevent t=0 crashes
+        import subprocess
+        sdf_string = """
+        <sdf version='1.6'>
+          <model name='obstacle'>
+            <static>true</static>
+            <pose>0.45 0.0 1.0 0 0 0</pose>
+            <link name='link'>
+              <collision name='collision'>
+                <geometry>
+                  <box><size>0.1 0.1 0.50</size></box>
+                </geometry>
+              </collision>
+              <visual name='visual'>
+                <geometry>
+                  <box><size>0.1 0.1 0.50</size></box>
+                </geometry>
+                <material>
+                  <ambient>0.2 0.8 0.2 1</ambient>
+                  <diffuse>0.2 0.8 0.2 1</diffuse>
+                </material>
+              </visual>
+            </link>
+          </model>
+        </sdf>
+        """
+        try:
+            cmd = ['ros2', 'run', 'ros_gz_sim', 'create', '-name', 'obstacle', '-string', sdf_string, '-x', '0.45', '-y', '0.0', '-z', '1.0']
+            subprocess.run(cmd, check=True)
+            self.get_logger().info('Added obstacle to Gazebo scene.')
+        except Exception as e:
+            self.get_logger().error(f'Failed to spawn Gazebo obstacle: {e}')
+        
+        import time
+        time.sleep(1.0)
 
     def update_box_pose(self, action, current_xy, z_height):
         scene = PlanningScene()
@@ -636,8 +681,14 @@ class PickPlaceNodeChomp(Node):
     
         # Log metrics
         obs_str = "with_obstacle" if self.with_obstacle else "no_obstacle"
-        filename = f"src/franka_warehouse_planner/benchmarks/benchmark_chomp_{self.world}_{obs_str}.json"
+        planner_name = "chomp"
+        filename = f"src/franka_warehouse_planner/benchmarks/benchmark_gazebo_physics_{planner_name}_{self.world}_{obs_str}.json"
         
+        import os
+        if os.path.exists(filename) and not self.overwrite_results:
+            self.get_logger().error(f"Safety check failed: {filename} already exists and overwrite_results is False!")
+            sys.exit(1)
+
         with open(filename, "w") as f:
             json.dump(self.metrics, f, indent=4)
         self.get_logger().info(f"Saved metrics to {filename}")

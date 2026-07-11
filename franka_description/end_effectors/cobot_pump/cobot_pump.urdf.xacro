@@ -18,13 +18,14 @@
                           with_sc="$(arg with_sc)">
    </xacro:ee_with_one_link>
 
-  <xacro:property name="ee_prefix" value="${robot_type}_" />
-  <gazebo reference="${ee_prefix}${ee_id}_collision">
-    <surface>
-      <contact>
-        <collide_bitmask>0x02</collide_bitmask>
-      </contact>
-    </surface>
+  <gazebo reference="fr3_cobot_pump">
+    <collision name="fr3_cobot_pump_collision">
+      <surface>
+        <contact>
+          <collide_bitmask>0x02</collide_bitmask>
+        </contact>
+      </surface>
+    </collision>
   </gazebo>
 
 </robot>

@@ -1,0 +1,218 @@
+[
+    {
+        "cycle": 1,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 1,
+                "success": true,
+                "hard_failure": false,
+                "plan_time": 9.755041122436523,
+                "exec_time": 4.0159218311309814,
+                "wait_time": 0.5,
+                "path_length": 2.812701859505707,
+                "waypoints": 20,
+                "vel_variance": 0.020564260370351653,
+                "collision_free": true
+            },
+            "approach": {
+                "name": "approach",
+                "attempts": 1,
+                "success": true,
+                "hard_failure": false,
+                "plan_time": 0.05155754089355469,
+                "exec_time": 2.9770126342773438,
+                "wait_time": 0.5,
+                "path_length": 0.9170214305122197,
+                "waypoints": 15,
+                "vel_variance": 0.0040224633270046425,
+                "collision_free": true
+            },
+            "retreat": {
+                "name": "retreat",
+                "attempts": 1,
+                "success": true,
+                "hard_failure": false,
+                "plan_time": 0.0517275333404541,
+                "exec_time": 2.856804370880127,
+                "wait_time": 0.5,
+                "path_length": 0.9215188524311847,
+                "waypoints": 15,
+                "vel_variance": 0.0040787980826377515,
+                "collision_free": true
+            },
+            "transit": {
+                "name": "transit",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 36.514575242996216,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {
+            "post_attach": "ATTACHED"
+        },
+        "accuracy": {
+            "pick": {
+                "pos_error": 8.654084667575625e-07,
+                "ori_error": 0.0005075395015539934
+            }
+        },
+        "overhead_wait_time": 2.0
+    },
+    {
+        "cycle": 2,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 37.19453740119934,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 3,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 35.71595883369446,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 4,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 34.339269399642944,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 5,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 35.03792357444763,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 6,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 35.60685420036316,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 7,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 34.89060568809509,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 8,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 33.50863027572632,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 9,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 37.48077607154846,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    },
+    {
+        "cycle": 10,
+        "segments": {
+            "pre_grasp": {
+                "name": "pre_grasp",
+                "attempts": 3,
+                "success": false,
+                "hard_failure": true,
+                "plan_time": 39.2840793132782,
+                "exec_time": 0.0,
+                "wait_time": 3.0
+            }
+        },
+        "poses": {},
+        "accuracy": {},
+        "overhead_wait_time": 0.0
+    }
+]

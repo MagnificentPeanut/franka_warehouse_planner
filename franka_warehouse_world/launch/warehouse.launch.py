@@ -82,7 +82,12 @@ def get_robot_description(context: LaunchContext):
 
 def resolve_world_path(context: LaunchContext):
     world = context.perform_substitution(LaunchConfiguration('world'))
+    with_obstacle = context.perform_substitution(LaunchConfiguration('with_obstacle'))
+    
     world_file = WORLDS[world][0] if world in WORLDS else world
+    if with_obstacle.lower() == 'true':
+        world_file = world_file.replace('.sdf', '_obstacle.sdf')
+        
     world_path = os.path.join(
         get_package_share_directory('franka_warehouse_world'), 'worlds', world_file)
     if not os.path.isfile(world_path):
@@ -132,11 +137,22 @@ def launch_setup(context: LaunchContext):
         arguments=['--display-config', rviz_file, '-f', 'world'],
         condition=IfCondition(LaunchConfiguration('rviz')))
 
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '/box/attach@std_msgs/msg/Empty]ignition.msgs.Empty',
+            '/box/detach@std_msgs/msg/Empty]ignition.msgs.Empty',
+        ],
+        output='screen'
+    )
+
     return [
         gazebo,
         *get_robot_description(context),
         spawn,
         rviz_node,
+        bridge,
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=spawn,
@@ -167,6 +183,9 @@ def generate_launch_description():
             'world', default_value='small',
             description="Warehouse world: 'small' (200x300x400 mm boxes), "
                         "'large' (200x400x400 mm boxes), or a .sdf filename."),
+        DeclareLaunchArgument(
+            'with_obstacle', default_value='false',
+            description='Load the world with the obstacle.'),
         DeclareLaunchArgument(
             'mount_height', default_value='',
             description='Arm mounting height in metres. Empty = use the '
