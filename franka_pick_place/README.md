@@ -3,11 +3,11 @@
 Autonomous pick-and-place of the warehouse box using MoveIt, with a switchable
 motion planner and an optional collision obstacle.
 
-- **Part 1 (default planner):** `pick_place_node` plans with MoveIt's default
+- **Default planner:** `pick_place_node` plans with MoveIt's default
   `RRTConnectConfigDefault`.
-- **Part 2 (planner integration):** `pick_place_node_chomp` runs the same
+- **Planner integration:** `pick_place_node_chomp` runs the same
   pick-and-place cycle with **CHOMP** instead.
-- **Part 3 (collision avoidance):** `with_obstacle:=true` adds a static
+- **Collision avoidance:** `with_obstacle:=true` adds a static
   0.1 × 0.1 × 0.50 m obstacle centred at (x=0.45, y=0.0, z=0.25) m — between
   the pick and place poses, in both the MoveIt planning scene and the live
   Gazebo world — that the nominal transit path would otherwise pass through.
@@ -38,7 +38,7 @@ ros2 launch franka_pick_place pick_place.launch.py world:=small planner_id:=RRTC
 |---|---|---|
 | `world` | `small` | `small` (200×300×400 mm box) or `large` (200×400×400 mm box). |
 | `planner_id` | `RRTConnect` | `RRTConnect` (default MoveIt planner) or `CHOMP`. Selects both the pick-place executable (`pick_place_node` / `pick_place_node_chomp`) and the matching MoveIt launch file (`moveit.launch.py` / `moveit_chomp.launch.py`). |
-| `with_obstacle` | `false` | Adds the Part 3 collision obstacle to both the Gazebo world and the MoveIt planning scene. |
+| `with_obstacle` | `false` | Adds the collision obstacle to both the Gazebo world and the MoveIt planning scene. |
 | `cycles` | `3` | Number of pick-and-place cycles to run before exiting. |
 | `launch_sim` | `true` | `true` starts Gazebo + MoveIt here (all-in-one); `false` assumes they're already running in separate terminals (use this when following the 3-terminal flow above). |
 | `controller` | `fr3_arm_controller` | Joint trajectory controller name, passed through to the Gazebo sim. |
@@ -58,7 +58,7 @@ By default a node **refuses to overwrite an existing results file**; pass
 See [`benchmarks/run_benchmarks_gazebo_physics.py`](../benchmarks/run_benchmarks_gazebo_physics.py)
 to drive a full sweep of planner × obstacle conditions unattended, and
 [`benchmarks/benchmark_results_gazebo_physics_verified.md`](../benchmarks/benchmark_results_gazebo_physics_verified.md)
-for the write-up of results (Part 4).
+for the write-up of results.
 
 ## Notes on the Gazebo box attachment
 
