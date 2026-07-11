@@ -6,11 +6,12 @@ import os
 import sys
 import time
 
+
 class FastDetach(Node):
     def __init__(self):
         super().__init__('fast_detach')
         self.pub = self.create_publisher(Empty, '/box/detach', 10)
-        
+
         # Ensure stale flag file is deleted at startup
         flag_file = '/tmp/stop_early_detach'
         if os.path.exists(flag_file):
@@ -19,7 +20,7 @@ class FastDetach(Node):
                 self.get_logger().info(f'Deleted stale flag file {flag_file}')
             except Exception as e:
                 self.get_logger().warn(f'Failed to delete stale flag file {flag_file}: {e}')
-                
+
         self.get_logger().info('Fast detach node started, waiting 2s for Gazebo to load...')
         time.sleep(2.0)
         # Publish at 100Hz using System clock (so it fires even before Gazebo publishes /clock)
@@ -33,6 +34,7 @@ class FastDetach(Node):
         self.get_logger().info("Published detach", throttle_duration_sec=1.0)
         self.pub.publish(Empty())
 
+
 def main(args=None):
     rclpy.init(args=args)
     node = FastDetach()
@@ -45,6 +47,7 @@ def main(args=None):
     finally:
         node.destroy_node()
         rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

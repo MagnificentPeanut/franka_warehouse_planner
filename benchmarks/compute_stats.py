@@ -1,5 +1,7 @@
 import json
+import sys
 import numpy as np
+
 
 def compute_metrics(file_path):
     try:
@@ -7,7 +9,7 @@ def compute_metrics(file_path):
             data = json.load(f)
     except FileNotFoundError:
         return
-        
+
     segments_data = {}
     total_cycle_time = []
     sync_overhead = []
@@ -15,26 +17,26 @@ def compute_metrics(file_path):
     pick_ori_acc = []
     place_pos_acc = []
     place_ori_acc = []
-    
+
     first_try_success = 0
     retry_success = 0
     hard_failed = 0
     total_cycles = len(data)
-    
+
     for cycle in data:
         cycle_failed = False
         had_retry = False
         cycle_plan_exec_sum = 0.0
-        
+
         for seg_name, seg in cycle['segments'].items():
             if seg.get('hard_failure', False):
                 cycle_failed = True
             if seg.get('attempts', 1) > 1:
                 had_retry = True
-                
+
             if seg_name not in segments_data:
                 segments_data[seg_name] = {'plan_time': [], 'exec_time': [], 'attempts': [], 'path_length': []}
-            
+
             p_time = seg.get('plan_time', 0.0)
             e_time = seg.get('exec_time', 0.0)
             segments_data[seg_name]['plan_time'].append(p_time)
@@ -42,18 +44,18 @@ def compute_metrics(file_path):
             segments_data[seg_name]['attempts'].append(seg.get('attempts', 1))
             segments_data[seg_name]['path_length'].append(seg.get('path_length', 0.0))
             cycle_plan_exec_sum += p_time + e_time
-            
+
         if cycle_failed:
             hard_failed += 1
         elif had_retry:
             retry_success += 1
         else:
             first_try_success += 1
-            
+
         if 'cycle_wall_time' in cycle and cycle_failed == False:
             total_cycle_time.append(cycle['cycle_wall_time'])
             sync_overhead.append(cycle['cycle_wall_time'] - cycle_plan_exec_sum)
-            
+
         if 'accuracy' in cycle:
             if 'pick' in cycle['accuracy'] and isinstance(cycle['accuracy']['pick'], dict):
                 pick_pos_acc.append(cycle['accuracy']['pick'].get('pos_error', 0.0))
@@ -78,7 +80,7 @@ def compute_metrics(file_path):
     print("### Segment Metrics")
     print("| Segment | Plan Time (Mean±Std) | Exec Time (Mean±Std) | Attempts (Mean) | Path Length (Mean, rad) |")
     print("|---------|----------------------|----------------------|-----------------|-------------------------|")
-    
+
     for seg_name in ['pre_grasp', 'approach', 'retreat', 'transit', 'place_approach', 'place_retreat']:
         if seg_name not in segments_data:
             continue
@@ -88,8 +90,8 @@ def compute_metrics(file_path):
               f"{np.mean(d['attempts']):.1f} | {np.mean(d['path_length']):.2f}rad |")
     print("\n\n")
 
+
 if __name__ == "__main__":
-    import sys
     if len(sys.argv) > 1:
         for f in sys.argv[1:]:
             compute_metrics(f)

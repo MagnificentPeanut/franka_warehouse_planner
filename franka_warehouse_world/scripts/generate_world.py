@@ -21,6 +21,7 @@ Box dimensions are given in the same X Y Z order as the request
 """
 
 import argparse
+import yaml
 
 # Fixed target mass (kg) for the box. The FR3 arm has a 3kg payload limit, and
 # the pump end-effector weighs 1.01kg. A 1.0kg box leaves plenty of margin
@@ -269,8 +270,6 @@ def generate(world_name, size, table, box_xy, static_box, with_obstacle):
 
 
 def main():
-    import yaml
-
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--config', required=True, help='path to scene.yaml')
     p.add_argument('--world', required=True, help='world key in scene.yaml (small/large)')

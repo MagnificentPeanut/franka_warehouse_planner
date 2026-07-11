@@ -3,6 +3,7 @@ import time
 import os
 import sys
 
+
 def run_benchmark(planner, obstacle, world='small', cycles=10):
     print(f"============================================================")
     print(f"Starting Gazebo Physics benchmark: planner={planner}, obstacle={obstacle}, world={world}")
@@ -39,6 +40,7 @@ def run_benchmark(planner, obstacle, world='small', cycles=10):
     os.system('pkill -9 -f "ign|ruby|gz-sim|gzserver|gzclient|move_group|robot_state_publisher|rviz2|pick_place_node|controller_manager" 2>/dev/null')
     os.system('killall -9 gzserver gzclient rviz2 2>/dev/null')
     time.sleep(3)
+
 
 if __name__ == "__main__":
     print("Starting Gazebo Physics-enabled benchmark suite for LARGE box...")

@@ -7,6 +7,8 @@ import time
 import json
 import math
 import statistics
+import subprocess
+import threading
 import tf2_ros
 import rclpy
 from rclpy.node import Node
@@ -120,7 +122,7 @@ class PickPlaceNodeChomp(Node):
         self.get_logger().info('Clearing scene state and waiting 5 seconds before starting...')
         self.detach_pub.publish(Empty())
         self.update_box_pose("detach", self.box_start_xy, self.box_size[2]/2.0)
-        
+
         if self.with_obstacle:
             time.sleep(4.0)
             self.spawn_obstacle()
@@ -174,7 +176,7 @@ class PickPlaceNodeChomp(Node):
         c = Constraints()
         joint_names = ik_res.solution.joint_state.name
         joint_positions = ik_res.solution.joint_state.position
-        
+
         for name, pos in zip(joint_names, joint_positions):
             if name.startswith('fr3_joint'):
                 jc = JointConstraint()
@@ -327,30 +329,29 @@ class PickPlaceNodeChomp(Node):
     def spawn_obstacle(self):
         scene = PlanningScene()
         scene.is_diff = True
-        
+
         obs = CollisionObject()
         obs.header.frame_id = self.planning_frame
         obs.id = 'part3_obstacle'
         obs.operation = CollisionObject.ADD
-        
+
         primitive = SolidPrimitive()
         primitive.type = SolidPrimitive.BOX
         primitive.dimensions = [0.1, 0.1, 0.50]
         obs.primitives.append(primitive)
-        
+
         p = Pose()
         p.position.x = 0.45
         p.position.y = 0.0
         p.position.z = 0.25
         p.orientation.w = 1.0
         obs.primitive_poses.append(p)
-        
+
         scene.world.collision_objects.append(obs)
         self.scene_pub.publish(scene)
         self.get_logger().info('Added obstacle to MoveIt scene.')
-        
+
         # Dynamically spawn the obstacle in Gazebo to prevent t=0 crashes
-        import subprocess
         sdf_string = """
         <sdf version='1.6'>
           <model name='obstacle'>
@@ -381,8 +382,7 @@ class PickPlaceNodeChomp(Node):
             self.get_logger().info('Added obstacle to Gazebo scene.')
         except Exception as e:
             self.get_logger().error(f'Failed to spawn Gazebo obstacle: {e}')
-        
-        import time
+
         time.sleep(1.0)
 
     def update_box_pose(self, action, current_xy, z_height):
@@ -430,7 +430,7 @@ class PickPlaceNodeChomp(Node):
             aco.object.id = 'box'
             aco.object.operation = CollisionObject.REMOVE
             scene.robot_state.attached_collision_objects.append(aco)
-            
+
             # Add back to world at new pose
             box.operation = CollisionObject.ADD
             primitive = SolidPrimitive()
@@ -438,19 +438,19 @@ class PickPlaceNodeChomp(Node):
             primitive.dimensions = [self.box_size[0],
                                     self.box_size[1], self.box_size[2]]
             box.primitives.append(primitive)
-    
+
             p = Pose()
             p.position.x = float(current_xy[0])
             p.position.y = float(current_xy[1])
             p.position.z = float(z_height)
             p.orientation.w = 1.0
-            
+
             box.primitive_poses.append(p)
             scene.world.collision_objects.append(box)
-    
+
             self.scene_pub.publish(scene)
             time.sleep(0.5)
-    
+
     def _get_box_pose_from_scene(self):
         req = GetPlanningScene.Request()
         req.components.components = req.components.WORLD_OBJECT_GEOMETRY | req.components.ROBOT_STATE_ATTACHED_OBJECTS
@@ -475,23 +475,23 @@ class PickPlaceNodeChomp(Node):
         waypoints = len(pts)
         if waypoints < 2:
             return {"path_length": 0.0, "waypoints": waypoints, "vel_variance": 0.0, "collision_free": True}
-    
+
         path_length = 0.0
         velocities = []
         for i in range(1, waypoints):
             diff = [abs(pts[i].positions[j] - pts[i-1].positions[j])
                 for j in range(len(pts[i].positions))]
             path_length += sum(diff)
-    
+
         for pt in pts:
             if pt.velocities:
                 avg_vel = sum([abs(v) for v in pt.velocities]) / len(pt.velocities)
                 velocities.append(avg_vel)
-    
+
         vel_var = 0.0
         if len(velocities) > 1:
             vel_var = statistics.variance(velocities)
-    
+
         collision_free = True
         sample_indices = set(range(0, waypoints, max(1, waypoints // 5)))
         sample_indices.add(waypoints - 1)
@@ -511,14 +511,14 @@ class PickPlaceNodeChomp(Node):
                 if not res.valid:
                     collision_free = False
                     break
-    
+
         return {
             "path_length": path_length,
             "waypoints": waypoints,
             "vel_variance": vel_var,
             "collision_free": collision_free
         }
-    
+
     def _verify_accuracy(self, target_xy, target_z):
         try:
             trans = self.tf_buffer.lookup_transform(
@@ -544,14 +544,14 @@ class PickPlaceNodeChomp(Node):
         except Exception as e:
             self.get_logger().error(f"TF verification failed: {e}")
             return {"pos_error": -1.0, "ori_error": -1.0}
-    
+
     def run_cycle(self):
         hover_height = self.box_size[2] + 0.15
         grasp_height = self.box_size[2] + 0.005
-    
+
         locs = [self.box_start_xy, self.place_target_xy]
         current_loc_idx = 0
-    
+
         def execute_segment(name, plan_func, target_pose, max_retries=3, is_cartesian=False):
             segment_data = {"name": name, "attempts": 0,
                             "success": False, "hard_failure": False, "plan_time": 0.0,
@@ -560,15 +560,15 @@ class PickPlaceNodeChomp(Node):
                 segment_data["attempts"] = r + 1
                 traj, p_time = plan_func(target_pose)
                 segment_data["plan_time"] += p_time
-                
+
                 if traj:
                     analysis = self._analyze_trajectory(traj, is_cartesian)
                     segment_data.update(analysis)
-                    
+
                     exec_t0 = time.time()
                     success = self.execute_trajectory(traj)
                     exec_t1 = time.time()
-                    
+
                     if success:
                         segment_data["success"] = True
                         segment_data["exec_time"] += (exec_t1 - exec_t0)
@@ -583,10 +583,10 @@ class PickPlaceNodeChomp(Node):
                     f"[{name}] Failed, retrying ({r+1}/{max_retries})...")
                 time.sleep(1.0)
                 segment_data["wait_time"] += 1.0
-            
+
             segment_data["hard_failure"] = True
             return segment_data
-    
+
         for i in range(self.cycles):
             self.get_logger().info(f"--- Cycle {i+1} ---")
             cycle_start = self.get_sim_time()
@@ -601,7 +601,7 @@ class PickPlaceNodeChomp(Node):
             if not seg_res["success"]:
                 self.metrics.append(cycle_metrics)
                 continue
-    
+
             # 2. APPROACH
             grasp = self._get_pose(target_xy[0], target_xy[1], grasp_height)
             self.set_acm(True)
@@ -611,10 +611,10 @@ class PickPlaceNodeChomp(Node):
             if not seg_res["success"]:
                 self.metrics.append(cycle_metrics)
                 continue
-    
+
             cycle_metrics["accuracy"]["pick"] = self._verify_accuracy(
             target_xy, grasp_height)
-    
+
             # 3. ATTACH
             self.attach_pub.publish(Empty())
             self.update_box_pose("attach", target_xy, grasp_height)
@@ -622,7 +622,7 @@ class PickPlaceNodeChomp(Node):
             time.sleep(0.5)
             cycle_metrics["overhead_wait_time"] += 2.0  # 1.5 in attach + 0.5 here
             cycle_metrics["poses"]["post_attach"] = self._get_box_pose_from_scene()
-    
+
             # 4. RETREAT
             seg_res = execute_segment(
             "retreat", self.plan_cartesian, pre_grasp, is_cartesian=True)
@@ -630,13 +630,13 @@ class PickPlaceNodeChomp(Node):
             if not seg_res["success"]:
                 self.metrics.append(cycle_metrics)
                 continue
-    
+
             self.set_acm(False)
-    
+
             # Update targets for place
             current_loc_idx = 1 - current_loc_idx
             target_xy = locs[current_loc_idx]
-    
+
             # 5. TRANSIT
             pre_place = self._get_pose(target_xy[0], target_xy[1], hover_height)
             seg_res = execute_segment("transit", self.plan_to_pose, pre_place)
@@ -644,7 +644,7 @@ class PickPlaceNodeChomp(Node):
             if not seg_res["success"]:
                 self.metrics.append(cycle_metrics)
                 continue
-    
+
             # 6. PLACE APPROACH
             place = self._get_pose(target_xy[0], target_xy[1], grasp_height)
             self.set_acm(True)
@@ -654,10 +654,10 @@ class PickPlaceNodeChomp(Node):
             if not seg_res["success"]:
                 self.metrics.append(cycle_metrics)
                 continue
-    
+
             cycle_metrics["accuracy"]["place"] = self._verify_accuracy(
             target_xy, grasp_height)
-    
+
             # 7. DETACH
             self.detach_pub.publish(Empty())
             self.update_box_pose("detach", target_xy, self.box_size[2]/2.0)
@@ -665,7 +665,7 @@ class PickPlaceNodeChomp(Node):
             time.sleep(0.5)
             cycle_metrics["overhead_wait_time"] += 1.0  # 0.5 in detach + 0.5 here
             cycle_metrics["poses"]["post_detach"] = self._get_box_pose_from_scene()
-    
+
             # 8. RETREAT
             seg_res = execute_segment(
             "place_retreat", self.plan_cartesian, pre_place, is_cartesian=True)
@@ -673,18 +673,17 @@ class PickPlaceNodeChomp(Node):
             if not seg_res["success"]:
                 self.metrics.append(cycle_metrics)
                 continue
-    
+
             self.set_acm(False)
             cycle_metrics["cycle_time"] = self.get_sim_time() - cycle_start
             cycle_metrics["cycle_wall_time"] = time.time() - cycle_wall_start
             self.metrics.append(cycle_metrics)
-    
+
         # Log metrics
         obs_str = "with_obstacle" if self.with_obstacle else "no_obstacle"
         planner_name = "chomp"
         filename = f"src/franka_warehouse_planner/benchmarks/benchmark_gazebo_physics_{planner_name}_{self.world}_{obs_str}.json"
-        
-        import os
+
         if os.path.exists(filename) and not self.overwrite_results:
             self.get_logger().error(f"Safety check failed: {filename} already exists and overwrite_results is False!")
             sys.exit(1)
@@ -692,13 +691,12 @@ class PickPlaceNodeChomp(Node):
         with open(filename, "w") as f:
             json.dump(self.metrics, f, indent=4)
         self.get_logger().info(f"Saved metrics to {filename}")
-    
-    
+
+
 def main(args=None):
     rclpy.init(args=args)
     node = PickPlaceNodeChomp()
 
-    import threading
     t = threading.Thread(target=node.run_cycle)
     t.start()
 
@@ -707,7 +705,7 @@ def main(args=None):
     t.join()
     node.destroy_node()
     rclpy.shutdown()
-    
-    
+
+
 if __name__ == '__main__':
     main()
