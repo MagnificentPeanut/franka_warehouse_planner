@@ -41,6 +41,28 @@ ros2 launch franka_warehouse_world moveit.launch.py world:=large
 See [`franka_warehouse_world/README.md`](franka_warehouse_world/README.md) for
 details on the worlds, the arm mounting, and the MoveIt integration.
 
+## Pick-and-place, planner comparison, and benchmarks
+
+**`franka_pick_place`** builds on the sim above to run autonomous
+pick-and-place cycles with a switchable motion planner
+(default MoveIt `RRTConnect` or **CHOMP**) and an optional collision obstacle:
+
+```bash
+# Terminal 1: Gazebo sim
+ros2 launch franka_warehouse_world warehouse.launch.py world:=small rviz:=false
+# Terminal 2: MoveIt (move_group + RViz)
+ros2 launch franka_warehouse_world moveit.launch.py world:=small
+# Terminal 3: pick-and-place
+ros2 launch franka_pick_place pick_place.launch.py world:=small launch_sim:=false planner_id:=RRTConnect cycles:=10
+```
+
+See [`franka_pick_place/README.md`](franka_pick_place/README.md) for launch
+arguments (planner selection, obstacle, cycle count) and
+[`benchmarks/benchmark_results_gazebo_physics_verified.md`](benchmarks/benchmark_results_gazebo_physics_verified.md)
+for the RRTConnect vs. CHOMP benchmark results (success rate, planning time,
+path quality, collision-avoidance behaviour) across both box sizes and
+obstacle conditions.
+
 ## Contents / provenance
 
 All packages are vendored in-repo. Provenance:

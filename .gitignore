@@ -6,3 +6,17 @@ log/
 # Python
 __pycache__/
 *.pyc
+
+# Dev-time debug/relic scripts (kept locally, not tracked)
+/setup_franka_warehouse_simulation.md
+/run_custom_test.sh
+/get_box_pose.sh
+/scripts/
+/benchmarks/Technical_Assessment.md
+/benchmarks/run_benchmarks.py
+/benchmarks/run_benchmarks_chomp.py
+/benchmarks/run_chomp_benchmarks.py
+/benchmarks/run_large_test.py
+/benchmarks/run_large_obstacle_test.py
+/franka_pick_place/launch/pick_place_chomp.launch.py
+/benchmarks/*archive_unverified*.json
